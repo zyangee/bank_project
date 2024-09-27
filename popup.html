@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      function selectValue(value) {
+        window.opener.setValueFromPopup(value);
+        window.close();
+      }
+    </script>
+  </head>
+  <body>
+    <h3>은행</h3>
+    <button type="button" onclick="selectValue('국민')">국민</button>
+    <button type="button" onclick="selectValue('신한')">신한</button>
+    <button type="button" onclick="selectValue('우리')">우리</button>
+    <button type="button" onclick="selectValue('하나')">하나</button>
+  </body>
+</html>
