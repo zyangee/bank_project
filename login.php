@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $conn->query($update_sql);
 
             echo "<script>alert('로그인 성공');</script>";
-            echo "<script>location.href='dashboard.php';</script>";
+            echo "<script>location.href='main.php';</script>";
             exit(); // 리다이렉트 후 코드 실행 방지
         } else {
             echo "<script>alert('로그인 실패: 사용자 ID 또는 비밀번호가 잘못되었습니다.');</script>";

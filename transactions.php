@@ -7,20 +7,35 @@ $transactions = [];
 
 // 검색 폼에서 데이터가 제출된 경우
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $accountNumber = $_POST['account-number'];
-    $startDate = $_POST['start-date'];
-    $endDate = $_POST['end-date'];
+    $accountNumber = $_POST['select_account'];
+    $startDate = $_POST['start-date'] ?? null;
+    $endDate = $_POST['end-date'] ?? null;
     $viewOption = $_POST['view-option'];
     $order = $_POST['order'];
 
-    // 기본 조회 쿼리 작성 (계좌번호와 기간에 따라 거래 내역 조회)
-    $sql = "SELECT t.transaction_id, t.transaction_date, tt.type AS transaction_type, 
+    //end-date가 선택된 경우, 시간 추가
+    if ($endDate) {
+        $endDate .= ' 23:59:59'; //종료 날짜에 시간을 추가
+    }
+    // 기본 조회 쿼리 작성 (계좌번호로 거래 내역 조회)
+    $sql = sprintf(
+        "SELECT t.transaction_id, t.transaction_date, tt.type AS transaction_type, 
                    a.account_number, t.receiver_account, t.amount, t.amount_after 
             FROM transactions t
             JOIN accounts a ON t.account_id = a.account_id
             LEFT JOIN transaction_types tt ON t.transaction_type_id = tt.id
-            WHERE a.account_number = '$accountNumber'
-            AND t.transaction_date BETWEEN '$startDate' AND '$endDate'";
+            WHERE a.account_number = '%s'",
+        $accountNumber
+    );
+
+    // 날짜 범위가 선택된 경우 쿼리에 조건 추가
+    if ($startDate && $endDate) {
+        $sql .= " AND t.transaction_date BETWEEN '$startDate' AND '$endDate'";
+    } elseif ($startDate) {
+        $sql .= " AND t.transaction_date >= '$startDate'";
+    } elseif ($endDate) {
+        $sql .= " AND t.transaction_date <= '$endDate'";
+    }
 
     // 거래 유형에 따른 필터링
     if ($viewOption == 'deposit') {
@@ -110,9 +125,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <!-- 조회기간 선택 -->
                 <div class="search-group">
                     <label>조회기간:</label>
-                    <input type="date" name="start-date" required>
+                    <input type="date" name="start-date" value="<?= $_POST['start-date'] ?? '' ?>">
                     <span>~</span>
-                    <input type="date" name="end-date" required>
+                    <input type="date" name="end-date" value="<?= $_POST['end-date'] ?? '' ?>">
                 </div>
 
                 <div class="options">
