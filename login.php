@@ -7,59 +7,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     try {
-        //SQL쿼리: 사용자 정보를 조회
-        $sql = "SELECT * FROM users WHERE userid = '$userid'";
-        $stmt = $conn->query($sql); //쿼리 실행
+        $sql = "SELECT * FROM users WHERE userid = '$userid' AND password = '$password'";
+        $stmt = $conn->query($sql); // 쿼리 실행
+        $user = $stmt->fetch(PDO::FETCH_ASSOC); // 사용자 정보 조회
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC); //사용자 정보 조회
-
-        //비밀번호가 일치하는지 확인
-        if ($user && $user['password'] === $password) {
-            $_SESSION['userid'] = $user['userid']; //세션에 사용자 ID 저장
-            $_SESSION['username'] = $user['username']; //세션에 사용자 이름 저장
+        if ($user) {
+            $_SESSION['userid'] = $user['userid']; // 세션에 사용자 ID 저장
+            $_SESSION['username'] = $user['username']; // 세션에 사용자 이름 저장
             $_SESSION['user_num'] = $user['user_num'];
-            echo "로그인 성공";
-            echo "<script>location.href='transfer.php';</script>";
+
+            // 로그인 성공 시 last_login 업데이트
+            $update_sql = "UPDATE users SET last_login = NOW() WHERE userid = '$userid'";
+            $conn->query($update_sql);
+
+            echo "<script>alert('로그인 성공');</script>";
+            echo "<script>location.href='dashboard.php';</script>";
+            exit(); // 리다이렉트 후 코드 실행 방지
         } else {
-            echo "로그인 실패: 사용자 ID 또는 비밀번호가 잘못되었습니다."; //로그인 실패 메시지 출력
+            echo "<script>alert('로그인 실패: 사용자 ID 또는 비밀번호가 잘못되었습니다.');</script>";
         }
+
     } catch (PDOException $e) {
-        //쿼리 실행 실패 시 오류 메시지 출력
+        // 쿼리 실행 실패 시 오류 메시지 출력
         die("로그인 중 오류가 발생했습니다: " . $e->getMessage());
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>로그인</title>
-    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
-    <div class="login-container">
-        <h3>로그인</h3>
-        <form method="POST" action="login.php">
-            <div class="input-group">
-                <label>사용자 ID: </label>
-                <input type="text" name="userid">
-            </div>
-            <div class="input-group">
-                <label>비밀번호: </label>
-                <input type="password" name="password">
-            </div>
-            <div class="button-group">
-                <button type="submit">로그인</button>
-                <a href="register.php">회원가입</a>
-            </div>
-            <div class="footer">
-                <a href="#">비밀번호를 잊으셨나요?</a>
-            </div>
-        </form>
-    </div>
+    <h2>로그인</h2>
+    <form method="POST" action="login.php">
+        <label>사용자 ID:</label>
+        <input type="text" name="userid" required>
+        <br>
+        <label>비밀번호:</label>
+        <input type="password" name="password" required>
+        <br>
+        <button type="submit">로그인</button>
+        <a href="register.php">회원가입</a>
+    </form>
 </body>
 
 </html>
