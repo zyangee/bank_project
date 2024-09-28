@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo json_encode(['success' => false, 'message' => '필수 데이터가 누락되었습니다.']);
         exit;
     }
+
     try {
         //트랜잭션 시작
         $conn->beginTransaction();

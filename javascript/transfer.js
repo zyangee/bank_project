@@ -9,33 +9,36 @@ function setValueFromPopup(value) {
 let currentBalance;
 //잔액 조회 함수
 function myAccount() {
-  const user_num = document.getElementById("out_account").value;
-  fetch(`../api/check_account.php?user_num=${user_num}`, {
-    method: "GET",
-  })
-    .then((response) => response.json())
-    // .then((response) => {
-    //   console.log("res", response);
-    // })
-    .then((data) => {
-      if (data.balance !== undefined) {
-        currentBalance = parseFloat(data.balance);
-        document.getElementById(
-          "balance"
-        ).innerHTML = `잔액: ${currentBalance}원`;
-        console.log("잔액: " + currentBalance);
-        console.log(data.balance);
-      } else {
+  const accountNumber = document.getElementById("out_account").value;
+  if (accountNumber) {
+    fetch(`../api/check_account.php?account_number=${accountNumber}`)
+      .then((response) => {
+        if (!response.ok) {
+          console.log("response 오류");
+        }
+        return response.json(); // JSON으로 직접 변환
+      })
+      .then((data) => {
+        console.log(data); // 데이터 로그 확인
+        if (data.balance !== undefined) {
+          document.getElementById(
+            "balance"
+          ).innerHTML = `잔액: ${data.balance}원`;
+          console.log("잔액: " + data.balance);
+        } else {
+          document.getElementById("balance").innerHTML =
+            "잔액 정보를 가져올 수 없습니다.";
+          console.log("잔액 정보 오류");
+        }
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
         document.getElementById("balance").innerHTML =
-          "잔액 정보를 가져올 수 없습니다.";
-        console.log("잔액 정보 오류");
-      }
-    })
-    .catch((error) => {
-      console.error("Error: ", error);
-      document.getElementById("balance").innerHTML =
-        "잔액 정보를 가져오는 중 오류가 발생하였습니다.";
-    });
+          "잔액 정보를 가져오는 중 오류가 발생하였습니다.";
+      });
+  } else {
+    console.log("계좌를 선택해주세요.");
+  }
 }
 
 //이체 실행 함수
@@ -69,6 +72,7 @@ function transferSubmit() {
       if (data.success) {
         alert("이체가 완료되었습니다.");
         myAccount(account_number_out);
+        window.location.href = "../main.php";
       } else {
         alert("이체에 실패했습니다." + data.message);
       }

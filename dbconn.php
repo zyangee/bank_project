@@ -15,11 +15,11 @@ $current_file = basename($_SERVER['PHP_SELF']);
 ?>
 
 <?php
-$serverName = "localhost";
+$serverName = "210.217.27.205";
 $database = "bank";
 
-$uid = "root";
-$pwd = "wlgid0420@";
+$uid = "bankuser1";
+$pwd = "Bankuser1!";
 
 try {
     $conn = new PDO("mysql:host=$serverName;dbname=$database", $uid, $pwd);

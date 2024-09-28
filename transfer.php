@@ -1,8 +1,10 @@
 <?php
 session_start();
+include "dbconn.php";
 if (!isset($_SESSION["userid"]) || !isset($_SESSION["username"])) {
     echo "로그인이 필요합니다.";
 }
+$select_user_num = $_SESSION['user_num'];
 ?>
 
 <!DOCTYPE html>
@@ -25,12 +27,10 @@ if (!isset($_SESSION["userid"]) || !isset($_SESSION["username"])) {
             <select id="out_account" name="out_account">
                 <option value="">선택하세요</option>
                 <?php
-                include "dbconn.php";
-
-                $select_user_num = $_SESSION['user_num'];
                 if ($select_user_num) {
-                    $query = "SELECT * FROM accounts WHERE user_num = $select_user_num";
+                    $query = "SELECT * FROM accounts WHERE user_num = :select_user_num";
                     $stmt = $conn->prepare($query);
+                    $stmt->bindParam(":select_user_num", $select_user_num);
                     $stmt->execute();
 
                     if ($stmt->rowCount() > 0) {
@@ -52,11 +52,6 @@ if (!isset($_SESSION["userid"]) || !isset($_SESSION["username"])) {
                 <div id="balance">잔액: 0원</div>
             </div>
         </div>
-        <!-- <div> 
-            <label>입금기관</label>
-            <input type="text" id="select_bank" name="select_bank" readonly>
-            <button type="button" onclick="popupBank()">기관선택</button>
-        </div> -->
         <div> <!--입금계좌번호 입력-->
             <label>입금계좌번호</label>
             <input type="text" id="in_account" name="in_account" required>
@@ -64,6 +59,10 @@ if (!isset($_SESSION["userid"]) || !isset($_SESSION["username"])) {
         <div> <!--이체금액 입력-->
             <label>이체금액</label>
             <input type="number" id="transfer_amount" name="transfer_amount" required>
+        </div>
+        <div><!--비밀번호 입력-->
+            <label>계좌 비밀번호 입력</label>
+            <input type="password" id="account_password" name="account_password" required>
         </div>
         <button type="submit" onclick="transferSubmit()">이체하기</button>
     </form>
