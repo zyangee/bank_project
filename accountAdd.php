@@ -7,13 +7,13 @@ include "api/random_account.php";
 <html>
 
 <head>
-
+    <script src="javascript/accountAdd.js"></script>
 </head>
 
 <body>
     <div>
         <h2><?php echo $_SESSION['username'] . "님의 " ?>계좌생성</h2>
-        <form action="" onsubmit="firstForm(event)" method="POST">
+        <form action="" onsubmit="submitForm(event)" method="POST">
             <div id="section">
                 <!-- <div>
                     <input type="hidden" name="account_id" value="<?php echo $_SESSION['account_id']; ?>">
@@ -27,22 +27,35 @@ include "api/random_account.php";
                     <label>주민번호</label>
                     <input type="text" id="resident-number1" name="resident-number1"
                         value="<?php echo ($resident_number1) ?>"> -
-                    <input type="text" id="resident-number2" name="resident-number2" required>
+                    <input type="text" id="resident-number2" name="resident-number2" maxlength="7" required>
+                    <div id="resident-error" style="color: red"></div><!--주민번호 에러메시지-->
                 </div>
                 <div>
                     <label>초기 금액</label>
                     <input type="number" id="balance" name="balance" required>
+                    <div id="balance-error" style="color: red"></div><!--초기금액 에러메시지-->
                 </div>
                 <div><!--인증번호-->
+                    <label>인증번호</label>
+                    <input type="text" id="auth-code" name="auth-code" maxlength="6">
+                    <button type="button" onclick="addAuthCode()">인증번호 발급</button>
+                    <div id="memo" style="color: gray; font-size: 12px;">인증번호 발급받은 후 인증하기 버튼을 눌러야 계좌 생성이 가능합니다</div>
 
+                    <div id="authentication" style="display:none;"> <!--발급 버튼을 눌러야 보임-->
+                        <div id="authentication-code"></div><!--인증번호 보이는 부분-->
+                        <button type="button" onclick="validAuthCode()">인증하기</button>
+                    </div>
+                    <div id="auth-error"></div>
                 </div>
+
                 <div> <!--숫자만 입력되게, 자리수는 4자리-->
                     <label>통장 비밀번호</label>
-                    <input type="password" id="account-password" name="account-password" required>
+                    <input type="password" id="account-password" name="account-password" maxlength="4" required>
+                    <div id="password-error" style="color: red"></div><!--통장 비밀번호 에러메시지-->
                 </div>
                 <div><!--계좌 사용용도-->
                     <label>계좌 사용용도</label>
-                    <select required>
+                    <select id="purpose" required>
                         <option>선택해주세요.</option>
                         <option>급여 및 아르바이트</option>
                         <option>생활비 관리</option>
@@ -50,23 +63,27 @@ include "api/random_account.php";
                         <option>예금 가입</option>
                         <option>대출신청</option>
                     </select>
+                    <div id="select-error" style="color: red"></div><!--select 옵션 선택 에러메시지-->
                 </div>
-                <div> <!--체크옵션 1-->
-                    <p>타인으로부터 통장대여 요청을 받은 사실이 있나요?</p>
-                    <div>
-                        <input type="radio" name="check1">예
-                        <input type="radio" name="check1">아니오
+                <div><!--체크 옵션-->
+                    <div> <!--체크옵션 1-->
+                        <p>타인으로부터 통장대여 요청을 받은 사실이 있나요?</p>
+                        <div>
+                            <input type="radio" name="check1" value="예">예
+                            <input type="radio" name="check1" value="아니오">아니오
+                        </div>
                     </div>
-                </div>
-                <div> <!--체크옵션 2-->
-                    <p>타인으로부터 통장개설을 요청받은 사실이 있나요?</p>
-                    <div>
-                        <input type="radio" name="check2">예
-                        <input type="radio" name="check2">아니오
+                    <div> <!--체크옵션 2-->
+                        <p>타인으로부터 통장개설을 요청받은 사실이 있나요?</p>
+                        <div>
+                            <input type="radio" name="check2" value="예">예
+                            <input type="radio" name="check2" value="아니오">아니오
+                        </div>
                     </div>
-                </div>
+                    <div id="check-error" style="color: red"></div><!--check 옵션 선택 에러메시지-->
+                </div><!--체크 옵션 div-->
             </div>
-            <input type="submit" value="계좌 생성">
+            <input type="submit" id="create-account" value="계좌 생성" disabled>
         </form>
     </div>
 </body>
