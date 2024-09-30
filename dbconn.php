@@ -15,7 +15,7 @@ $current_file = basename($_SERVER['PHP_SELF']);
 ?>
 
 <?php
-$serverName = "210.217.27.205";
+$serverName = "localhost";
 $database = "bank";
 
 $uid = "bankuser1";

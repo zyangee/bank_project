@@ -62,7 +62,7 @@ $select_user_num = $_SESSION['user_num'];
         </div>
         <div><!--비밀번호 입력-->
             <label>계좌 비밀번호 입력</label>
-            <input type="password" id="account_password" name="account_password" required>
+            <input type="password" id="input_password" name="input_password" required>
         </div>
         <button type="submit" onclick="transferSubmit()">이체하기</button>
     </form>

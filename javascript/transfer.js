@@ -48,9 +48,11 @@ function transferSubmit() {
   const transferAmount = parseFloat(
     document.getElementById("transfer_amount").value
   );
+  const account_password = document.getElementById("input_password").value;
   console.log("출금 계좌: ", account_number_out);
   console.log("입금 계좌: ", account_number_in);
   console.log("이체 금액: ", transferAmount);
+  console.log("입력된 비밀번호: ", account_password);
   //서버로 이체 요청
   fetch(`../api/transfer_account.php`, {
     method: "POST",
@@ -61,6 +63,7 @@ function transferSubmit() {
       account_number_out: account_number_out,
       account_number_in: account_number_in,
       transfer_amount: transferAmount,
+      account_password: account_password,
     }),
   })
     .then((response) => response.json())
