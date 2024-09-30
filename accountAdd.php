@@ -44,7 +44,7 @@ include "api/random_account.php";
                 </div>
 
                 <label class="input">주민번호</label>
-                <div class="resident-input">
+                <div class="align-right-input">
                     <input type="text" id="resident-number1" name="resident-number1"
                         value="<?php echo ($resident_number1) ?>">
                     <span>-</span>
@@ -59,8 +59,8 @@ include "api/random_account.php";
                 <div class="auth_num"><!--인증번호-->
                     <label class="input">인증번호</label>
                     <div id="memo">인증번호 발급받은 후 인증하기 버튼을 눌러야 계좌 생성이 가능합니다</div>
-                    <input class="input_text" type="text" id="auth-code" name="auth-code" maxlength="6">
-                    <button type="button" onclick="addAuthCode()">인증번호 발급</button>
+                    <input class="input_text next_button" type="text" id="auth-code" name="auth-code" maxlength="6">
+                    <button class="input_button" type="button" onclick="addAuthCode()">인증번호 발급</button>
 
                     <div id="authentication" style="display:none;"> <!--발급 버튼을 눌러야 보임-->
                         <div id="authentication-code"></div><!--인증번호 보이는 부분-->
@@ -77,7 +77,7 @@ include "api/random_account.php";
                 </div>
                 <div><!--계좌 사용용도-->
                     <label class="input">계좌 사용용도</label>
-                    <select id="purpose" required>
+                    <select id="purpose" class="select" required>
                         <option>선택해주세요.</option>
                         <option>급여 및 아르바이트</option>
                         <option>생활비 관리</option>

@@ -1,10 +1,10 @@
-.resident-input {
+.align-right-input {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.resident-input input {
+.align-right-input input {
   width: 48%;
   padding: 10px;
   margin-bottom: 20px;
@@ -13,7 +13,7 @@
   font-size: 16px;
 }
 
-.resident-input span {
+.align-right-input span {
   margin: 0 10px;
   font-size: 24px;
   font-weight: bold;
@@ -26,7 +26,7 @@
   margin-bottom: 5px;
 }
 
-.auth_num input {
+.next_button {
   width: calc(100% - 140px);
   /* 버튼 너비만큼 줄임 */
   padding: 10px;
@@ -38,7 +38,7 @@
   box-sizing: border-box;
 }
 
-.auth_num button {
+.input_button {
   padding: 10px 15px;
   background-color: #003366;
   color: white;
@@ -50,7 +50,7 @@
   margin-left: 10px;
 }
 
-.auth_num button:hover {
+.input_button:hover {
   background-color: #002244;
 }
 
@@ -73,7 +73,7 @@
   margin-bottom: 10px;
 }
 
-#purpose {
+.select {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;

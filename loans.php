@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>대출</title>
     <link rel="stylesheet" href="css/back.css">
+    <link rel="stylesheet" href="css/input.css">
+    <link rel="stylesheet" href="css/input_account.css">
+    <link rel="stylesheet" href="css/loan.css">
 </head>
 
 <body>
@@ -26,14 +29,14 @@
         </div>
     </header>
     <div class="container">
-        <div class="main">
-            <h1>대출 상품</h1>
+        <h2 class="h2_pageinfo">대출 상품</h2>
+        <div class="">
             <div class="loan-product">
-                <h2>신용대출</h2>
+                <h3>신용대출</h3>
                 <p>최대 금액: 3억 원</p>
                 <p>최저 금리: 3.5%</p>
                 <p>기간: 1년 ~ 5년</p>
-                <button type="button" onclick="toggleDetails(this)">자세히 보기</button>
+                <button class="input_button" type="button" onclick="toggleDetails(this)">자세히 보기</button>
                 <div class="details" style="display: none;">
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr>
@@ -72,11 +75,11 @@
                 </div>
             </div>
             <div class="loan-product">
-                <h2>담보대출</h2>
+                <h3>담보대출</h3>
                 <p>최대 금액: 대출가능금액 이내</p>
                 <p>최저 금리: 4.0%</p>
                 <p>기간: 1년 ~ 10년</p>
-                <button type="button" onclick="toggleDetails(this)">자세히 보기</button>
+                <button class="input_button" type="button" onclick="toggleDetails(this)">자세히 보기</button>
                 <div class="details" style="display: none;">
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr>
@@ -117,11 +120,11 @@
                 </div>
             </div>
             <div class="loan-product">
-                <h2>자동차대출</h2>
+                <h3>자동차대출</h3>
                 <p>최대 금액: 6,000만원</p>
                 <p>최저 금리: 3.8%</p>
                 <p>기간: 1년 ~ 7년</p>
-                <button type="button" onclick="toggleDetails(this)">자세히 보기</button>
+                <button class="input_button" type="button" onclick="toggleDetails(this)">자세히 보기</button>
                 <div class="details" style="display: none;">
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr>
@@ -156,66 +159,63 @@
                         </tr>
                     </table>
                 </div>
-
+            </div>
+            <div class="loan-product">
+                <h3>사업자대출</h3>
+                <p>최대 금액: 5억 원</p>
+                <p>최저 금리: 4.5%</p>
+                <p>기간: 1년 ~ 10년</p>
+                <button class="input_button" type="button" onclick="toggleDetails(this)">자세히 보기</button>
+                <div class="details" style="display: none;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <th>대출 상품</th>
+                            <td>사업 운영 자금을 지원하는 대출 상품<br>
+                                유연한 상환 조건과 경쟁력 있는 금리 제공
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>대출 신청 자격</th>
+                            <td>사업자 등록 후 최소 6개월 이상 운영 중인 사업체 소유자<br>
+                                ※ 개인사업자 및 법인사업자 모두 신청 가능<br>
+                                ※ 신용도 및 사업실적에 따라 대출 가능 여부 결정
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>대출 금액</th>
+                            <td>최소 1천만원에서 최대 5억원까지 가능<br>
+                                - 대출 가능 금액은 사업 규모와 신용도에 따라 다름<br>
+                                - 사업 운영에 필요한 각종 비용(재료비, 인건비 등) 포함 가능
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>대출 기간 및 상환 방법</th>
+                            <td>대출 기간: 1년에서 5년 이내<br>
+                                원(리)금 균등 분할 상환 또는 일시 상환 방식 선택 가능<br>
+                                ※ 상환 방식은 고객의 상황에 따라 조정 가능
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>대출 신청 방법</th>
+                            <td>온라인 및 오프라인 모두 신청 가능<br>
+                                - 온라인 신청은 웹사이트 또는 앱 통해 가능<br>
+                                - 서류 제출 필요: 사업자등록증, 소득증빙서류 등
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="loan-product">
-            <h2>사업자대출</h2>
-            <p>최대 금액: 5억 원</p>
-            <p>최저 금리: 4.5%</p>
-            <p>기간: 1년 ~ 10년</p>
-            <button type="button" onclick="toggleDetails(this)">자세히 보기</button>
-            <div class="details" style="display: none;">
-                <table style="width: 100%; border-collapse: collapse;">
-                    <tr>
-                        <th>대출 상품</th>
-                        <td>사업 운영 자금을 지원하는 대출 상품<br>
-                            유연한 상환 조건과 경쟁력 있는 금리 제공
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>대출 신청 자격</th>
-                        <td>사업자 등록 후 최소 6개월 이상 운영 중인 사업체 소유자<br>
-                            ※ 개인사업자 및 법인사업자 모두 신청 가능<br>
-                            ※ 신용도 및 사업실적에 따라 대출 가능 여부 결정
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>대출 금액</th>
-                        <td>최소 1천만원에서 최대 5억원까지 가능<br>
-                            - 대출 가능 금액은 사업 규모와 신용도에 따라 다름<br>
-                            - 사업 운영에 필요한 각종 비용(재료비, 인건비 등) 포함 가능
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>대출 기간 및 상환 방법</th>
-                        <td>대출 기간: 1년에서 5년 이내<br>
-                            원(리)금 균등 분할 상환 또는 일시 상환 방식 선택 가능<br>
-                            ※ 상환 방식은 고객의 상황에 따라 조정 가능
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>대출 신청 방법</th>
-                        <td>온라인 및 오프라인 모두 신청 가능<br>
-                            - 온라인 신청은 웹사이트 또는 앱 통해 가능<br>
-                            - 서류 제출 필요: 사업자등록증, 소득증빙서류 등
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-    </div>
-    <script>
-        function toggleDetails(button) {
-            const details = button.nextElementSibling;
-            if (details.style.display === "none") {
-                details.style.display = "block";
-            } else {
-                details.style.display = "none";
+        <script>
+            function toggleDetails(button) {
+                const details = button.nextElementSibling;
+                if (details.style.display === "none") {
+                    details.style.display = "block";
+                } else {
+                    details.style.display = "none";
+                }
             }
-        }
-    </script>
+        </script>
 </body>
 
 </html>

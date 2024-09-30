@@ -167,75 +167,76 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </header>
     <div class="container">
-        <div class="main">
-            <h1>대출 신청</h1>
-            <form action="" method="POST"> <!-- action=""으로 수정하여 같은 페이지로 POST 요청 -->
-                <div>
-                    <label for="loanType">대출 종류</label>
-                    <select id="loanType" name="loanType" onchange="updateInterestRates()">
-                        <option value="default">선택</option>
-                        <option value="신용대출">신용대출</option>
-                        <option value="담보대출">담보대출</option>
-                        <option value="자동차대출">자동차대출</option>
-                        <option value="사업자대출">사업자대출</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="loanAmount">대출 금액</label>
-                    <input type="number" id="loanAmount" name="loanAmount" required min="1000000" max="1000000000"
-                        step="1000000">
-                </div>
-                <div>
-                    <label for="totalAssets">총 자산</label>
-                    <div id="memo">자동으로 적용됩니다.</div>
-                    <input type="text" id="totalAssets" name="totalAssets"
-                        value="<?php echo number_format($totalAssets); ?>" readonly />
-                </div>
-                <div>
-                    <label for="interestRate">적용 금리 (%) - 자동으로 적용됩니다.</label>
-                    <input type="text" id="interestRate" name="interestRate" readonly>
-                </div>
-                <div>
-                    <label for="loanStartDate">대출 시작일</label>
-                    <input type="date" id="loanStartDate" name="loanStartDate" onchange="updateEndDate()" required>
-                </div>
-                <div>
-                    <label for="loanEndDate">대출 종료일 - 자동으로 적용됩니다.</label>
-                    <input type="date" id="loanEndDate" name="loanEndDate" readonly required>
-                </div>
-                <div>
-                    <label for="loanPurpose">대출 용도</label>
-                    <select id="loanPurpose" name="loanPurpose">
-                        <option value="default">선택</option>
-                        <option value="homePurchase">주택구입자금</option>
-                        <option value="rentalDeposit">주거목적임차자금</option>
-                        <option value="livingExpenses">생활자금</option>
-                        <option value="debtRepayment">부채상환</option>
-                        <option value="relocation">이주비</option>
-                        <option value="interimPayment">중도금대출</option>
-                        <option value="realEstatePurchase">부동산구입자금</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="loanRepaymentIncome">대출상환소득</label>
-                    <select id="loanRepaymentIncome" name="loanRepaymentIncome">
-                        <option value="default">선택</option>
-                        <option value="salary">근로소득</option>
-                        <option value="businessIncome">사업소득</option>
-                        <option value="rentalIncome">임대소득</option>
-                        <option value="pension">연금소득</option>
-                        <option value="other">기타소득</option>
-                    </select>
-                </div>
-                <div>
-                    <label>
-                        <input type="checkbox" id="confirmationCheckbox" onclick="toggleSubmitButton()">
-                        위 내용이 사실과 다름이 없음을 확인합니다.
-                    </label>
-                </div>
-                <button type="submit" id="submitButton" disabled>신청하기</button> <!-- disabled 속성 추가 -->
-            </form>
-        </div>
+        <h2 class="h2_pageinfo">대출신청</h2>
+        <form class="form_css" action="" method="POST"> <!-- action=""으로 수정하여 같은 페이지로 POST 요청 -->
+            <div>
+                <label class="input" for="loanType">대출 종류</label>
+                <select class="select" id="loanType" name="loanType" onchange="updateInterestRates()">
+                    <option value="default">선택</option>
+                    <option value="신용대출">신용대출</option>
+                    <option value="담보대출">담보대출</option>
+                    <option value="자동차대출">자동차대출</option>
+                    <option value="사업자대출">사업자대출</option>
+                </select>
+            </div>
+            <div>
+                <label class="input" for="loanAmount">대출 금액</label>
+                <input class="input_text" type="number" id="loanAmount" name="loanAmount" required min="1000000"
+                    max="1000000000" step="1000000">
+            </div>
+            <div>
+                <label class="input" for="totalAssets">총 자산</label>
+                <div id="memo">자동으로 적용됩니다.</div>
+                <input class="input_text" type="text" id="totalAssets" name="totalAssets"
+                    value="<?php echo number_format($totalAssets); ?>" readonly />
+            </div>
+            <div>
+                <label class="input" for="interestRate">적용 금리 (%)</label>
+                <div id="memo">자동으로 적용됩니다.</div>
+                <input class="input_text" type="text" id="interestRate" name="interestRate" readonly>
+            </div>
+            <div>
+                <label class="input" for="loanStartDate">대출 시작일</label>
+                <input class="input_text" type="date" id="loanStartDate" name="loanStartDate" onchange="updateEndDate()"
+                    required>
+            </div>
+            <div>
+                <label class="input" for="loanEndDate">대출 종료일</label>
+                <div id="memo">자동으로 적용됩니다.</div>
+                <input class="input_text" type="date" id="loanEndDate" name="loanEndDate" readonly required>
+            </div>
+            <div>
+                <label class="input" for="loanPurpose">대출 용도</label>
+                <select class="select" id="loanPurpose" name="loanPurpose">
+                    <option value="default">선택</option>
+                    <option value="homePurchase">주택구입자금</option>
+                    <option value="rentalDeposit">주거목적임차자금</option>
+                    <option value="livingExpenses">생활자금</option>
+                    <option value="debtRepayment">부채상환</option>
+                    <option value="relocation">이주비</option>
+                    <option value="interimPayment">중도금대출</option>
+                    <option value="realEstatePurchase">부동산구입자금</option>
+                </select>
+            </div>
+            <div>
+                <label class="input" for="loanRepaymentIncome">대출상환소득</label>
+                <select class="select" id="loanRepaymentIncome" name="loanRepaymentIncome">
+                    <option value="default">선택</option>
+                    <option value="salary">근로소득</option>
+                    <option value="businessIncome">사업소득</option>
+                    <option value="rentalIncome">임대소득</option>
+                    <option value="pension">연금소득</option>
+                    <option value="other">기타소득</option>
+                </select>
+            </div>
+            <div>
+                <label class="input">
+                    <input type="checkbox" id="confirmationCheckbox" onclick="toggleSubmitButton()">
+                    위 내용이 사실과 다름이 없음을 확인합니다.
+                </label>
+            </div>
+            <button class="submit_button" type="submit" id="submitButton" disabled>신청하기</button> <!-- disabled 속성 추가 -->
+        </form>
     </div>
 </body>
 
