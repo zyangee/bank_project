@@ -32,42 +32,24 @@ $conn = null; // 연결 종료
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>대출 내역 조회</title>
-    <link rel="stylesheet" type="text/css" href="loans3.css">
+    <link rel="stylesheet" href="css/back.css">
 </head>
 
 <body>
     <header>
-        <div class="container">
-            <h1>00은행</h1>
-            <nav>
-                <ul>
-                    <li><a href="#">메인</a></li>
-                    <li>
-                        <a href="#">조회</a>
-                        <ul>
-                            <li><a href="#">계좌 조회</a></li>
-                            <li><a href="#">거래 내역 조회</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">이체</a>
-                        <ul>
-                            <li><a href="#">계좌 이체</a></li>
-                            <li><a href="#">이체 결과 조회</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">대출</a>
-                        <ul>
-                            <li><a href="#">대출 상품</a></li>
-                            <li><a href="#">대출 신청</a></li>
-                            <li><a href="#">대출 조회</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">마이페이지</a></li>
-                    <li><a href="#">로그아웃</a></li>
-                </ul>
-            </nav>
+        <div class="navbar">
+            <span>00은행</span>
+            <ul>
+                <?php
+                include "dbconn.php";
+                if (isset($_SESSION['username'])): ?>
+                    <li><a href="#"><?php echo $_SESSION['username']; ?></a>님</li>
+                    <li>|</li>
+                    <li><a href="logout.php">로그아웃</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">로그인</a></li>
+                <?php endif; ?>
+            </ul>
         </div>
     </header>
     <div class="container2">

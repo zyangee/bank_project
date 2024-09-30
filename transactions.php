@@ -76,17 +76,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>거래내역 조회</title>
-    <link rel="stylesheet" href="transaction2.css">
+    <link rel="stylesheet" href="css/back.css">
 </head>
 
 <body>
+    <div class="navbar">
+        <span>00은행</span>
+        <ul>
+            <?php
+            include "dbconn.php";
+            if (isset($_SESSION['username'])): ?>
+                <li><a href="#"><?php echo $_SESSION['username']; ?></a>님</li>
+                <li>|</li>
+                <li><a href="logout.php">로그아웃</a></li>
+            <?php else: ?>
+                <li><a href="login.php">로그인</a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
     <div class="container">
         <h1>거래내역 조회</h1>
         <div class="search-box">
             <form method="post" action="transactions.php">
-                <div>
-                    <?php echo $_SESSION["username"]; ?>님
-                </div>
+
                 <!-- 계좌번호 입력 -->
                 <div class="search-group">
                     <label for="account-number">조회 계좌번호:</label>

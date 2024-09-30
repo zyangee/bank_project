@@ -1,13 +1,13 @@
 <?php
 session_start();
-
 include "dbconn.php";
-
 // 사용자 ID는 세션에서 가져온다고 가정합니다.
-$user_num = '2'; // 여기 user_num으로 수정하면서 24, 87, 91, 157 수정함. 157이 id일떄 안됨
+$user_num = $_SESSION['user_num']; // 여기 user_num으로 수정하면서 24, 87, 91, 157 수정함. 157이 id일떄 안됨
 
 // 사용자 정보를 가져오는 SQL 쿼리
-$sql = "SELECT * FROM users WHERE user_num = :user_num";
+$sql = "SELECT username, phone_number, userid, email, date_of_birth, account_created_at, last_login, password 
+        FROM users 
+        WHERE user_num = :user_num";
 
 try {
     $stmt = $conn->prepare($sql);
@@ -33,39 +33,6 @@ try {
     exit;
 }
 
-// 비밀번호 변경 처리
-$passwordChangeMessage = ""; // 기본값 설정
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['oldPassword'])) {
-    $currentPassword = $_POST['oldPassword'];
-    $newPassword = $_POST['newPassword'];
-    $confirmPassword = $_POST['confirmPassword'];
-
-    // 현재 비밀번호 확인
-    if ($currentPassword === $plainPassword) { // 평문 비교
-        // 새 비밀번호와 확인 비밀번호가 일치하는지 확인
-        if ($newPassword !== $confirmPassword) {
-            $passwordChangeMessage = "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.";
-        } else {
-            // 비밀번호 업데이트 쿼리
-            $updateSql = "UPDATE users SET password = :password WHERE userid = :userid";
-            $updateStmt = $conn->prepare($updateSql);
-            $updateStmt->bindParam(':password', $newPassword); // 평문 비밀번호로 업데이트
-            $updateStmt->bindParam(':userid', $user_id);
-
-            if ($updateStmt->execute()) {
-                $passwordChangeMessage = "비밀번호가 성공적으로 변경되었습니다.";
-            } else {
-                $passwordChangeMessage = "비밀번호 변경 중 오류가 발생했습니다.";
-            }
-        }
-    } else {
-        $passwordChangeMessage = "현재 비밀번호가 올바르지 않습니다.";
-    }
-}
-
-// 모달 표시 조건
-$showErrorModal = !empty($passwordChangeMessage);
 ?>
 
 <?php
@@ -91,41 +58,26 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>계정 관리</title>
-    <!-- <link rel="stylesheet" type="text/css" href="users.css"> -->
+    <link rel="stylesheet" href="css/back.css">
 </head>
 
 <body>
     <header>
-        <div class="container">
-            <h1>은행 계정 관리</h1>
-            <nav>
-                <ul>
-                    <li><a href="#">메인</a></li>
-                    <li>
-                        <a href="#">조회</a>
-                        <ul>
-                            <li><a href="#">계좌 조회</a></li>
-                            <li><a href="#">거래내역 조회</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">이체</a>
-                        <ul>
-                            <li><a href="#">계좌 이체</a></li>
-                            <li><a href="#">이체결과 조회</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">대출</a>
-                        <ul>
-                            <li><a href="#">대출 신청</a></li>
-                            <li><a href="#">대출진행현황</a></li>
-                            <li><a href="#">대출관리</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">로그아웃</a></li>
-                </ul>
-            </nav>
+        <div class="navbar">
+            <span>00은행</span>
+            <ul>
+                <li><a href="main.php">홈</a></li>
+                <li>|</li>
+                <?php
+                include "dbconn.php";
+                if (isset($_SESSION['username'])): ?>
+                    <li><a href="#"><?php echo $_SESSION['username']; ?></a>님</li>
+                    <li>|</li>
+                    <li><a href="logout.php">로그아웃</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">로그인</a></li>
+                <?php endif; ?>
+            </ul>
         </div>
     </header>
     <div class="container">
@@ -144,7 +96,7 @@ try {
                         <th>사용자 ID</th>
                         <td><?php echo ($user_num); ?></td>
                         <th>비밀번호 변경</th>
-                        <td><a href="#" id="changePasswordLink">비밀번호 변경</a></td>
+                        <td><a href="changePassword.php?user_num=<?php echo $user_num; ?>">비밀번호 변경</a></td>
                     </tr>
                     <tr>
                         <th>이메일</th>
@@ -186,70 +138,6 @@ try {
         </table>
     </div>
 
-    <!-- 비밀번호 변경 모달 -->
-    <div id="myModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>비밀번호 변경</h2>
-            <form method="POST" action="">
-                <label for="oldPassword">현재 비밀번호:</label><br>
-                <input type="password" id="oldPassword" name="oldPassword" required><br><br>
-                <label for="newPassword">새 비밀번호:</label><br>
-                <input type="password" id="newPassword" name="newPassword" required><br><br>
-                <label for="confirmPassword">새 비밀번호 확인:</label><br>
-                <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
-                <button type="submit">비밀번호 변경</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- 오류 메시지 모달 -->
-    <div id="errorModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="closeError">&times;</span>
-            <h2>안내 메시지</h2>
-            <p id="errorMessage"></p>
-        </div>
-    </div>
-
-    <script>
-        // 모달 열기
-        var modal = document.getElementById("myModal");
-        var btn = document.getElementById("changePasswordLink");
-        var span = document.getElementsByClassName("close")[0];
-
-        btn.onclick = function (event) {
-            event.preventDefault();
-            modal.style.display = "block";
-        }
-
-        // 오류 메시지 모달 열기
-        var errorModal = document.getElementById("errorModal");
-        var closeErrorModalBtn = document.getElementsByClassName("closeError")[0];
-
-        if (<?php echo $showErrorModal ? 'true' : 'false'; ?>) {
-            document.getElementById('errorMessage').innerText = '<?php echo addslashes($passwordChangeMessage); ?>';
-            errorModal.style.display = "block"; // 오류 메시지 모달 열기
-        }
-
-        closeErrorModalBtn.onclick = function () {
-            errorModal.style.display = "none"; // 오류 메시지 모달 닫기
-        }
-
-        // 모달 닫기
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-            if (event.target == errorModal) {
-                errorModal.style.display = "none";
-            }
-        }
-    </script>
 </body>
 
 </html>

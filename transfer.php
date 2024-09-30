@@ -12,15 +12,24 @@ $select_user_num = $_SESSION['user_num'];
 
 <head>
     <script src="javascript/transfer.js"></script>
+    <link rel="stylesheet" href="css/back.css">
 </head>
 
 <body>
     <form method="POST">
-        <div>
-            <?php echo $_SESSION["username"]; ?>님
-            <a href="#"> <!--로그아웃 페이지-->
-                <button>로그아웃</button>
-            </a>
+        <div class="navbar">
+            <span>00은행</span>
+            <ul>
+                <?php
+                include "dbconn.php";
+                if (isset($_SESSION['username'])): ?>
+                    <li><a href="#"><?php echo $_SESSION['username']; ?></a>님</li>
+                    <li>|</li>
+                    <li><a href="logout.php">로그아웃</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">로그인</a></li>
+                <?php endif; ?>
+            </ul>
         </div>
         <div> <!--출금계좌선택-->
             <label>출금계좌번호</label>

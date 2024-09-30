@@ -1,121 +1,117 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>은행</title>
-    <!-- <link rel="stylesheet" href="main.css"> -->
+    <title>main</title>
+    <link rel="stylesheet" href="css/back.css">
+    <style>
+        .category-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 100px;
+            flex-wrap: wrap;
+        }
+
+        .category {
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 15px;
+            width: 250px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            /*마우스 올렸을 때 애니메이션 효과 */
+        }
+
+        .category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .category ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .category ul li {
+            margin: 10px 0;
+            font-size: 1em;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .category ul li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .category ul a:hover {
+            color: #ffb900;
+            cursor: pointer;
+
+        }
+
+        .category-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 10px;
+            padding: 10px 0;
+            border-bottom: 2px solid #ccc;
+        }
+    </style>
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <h1>은행</h1>
-            </div>
-            <nav>
-                <div id="yu">
-                    <ul>
-                        <li><a href="#">홈</a></li>
-                        <li>|</li>
-                        <li><a href="#">서비스</a></li>
-                        <li>|</li>
-                        <li><a href="#">고객센터</a></li>
-                        <li>|</li>
-                        <?php
-                        include "dbconn.php";
-                        if (isset($_SESSION['username'])): ?>
-                            <!-- 로그인이 되어있을 때 -->
-                            <li><a href="#"><?php echo $_SESSION['username']; ?></a>님</li>
-                            <li><a href="logout.php">로그아웃</a></li>
-                        <?php else: ?>
-                            <!-- 로그인이 안 되어있을 때 -->
-                            <li><a href="login.php">로그인</a></li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </nav>
+    <div class="navbar">
+        <span>00은행</span>
+        <ul>
+            <?php
+            include "dbconn.php";
+            if (isset($_SESSION['username'])): ?>
+                <li><a href="#"><?php echo $_SESSION['username']; ?></a>님</li>
+                <li>|</li>
+                <li><a href="logout.php">로그아웃</a></li>
+            <?php else: ?>
+                <li><a href="login.php">로그인</a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+
+    <div class="category-container" id="category-container">
+        <div class="category">
+            <div class="category-header">계좌</div>
+            <ul>
+                <li><a href="accountAdd.php">계좌 생성</a></li>
+                <li><a href="transfer.php">송금</a></li>
+                <li><a href="transactions.php">거래 내역</a></li>
+            </ul>
         </div>
-    </header>
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h2>안녕하세요, 은행입니다.</h2>
-                <p>최고의 금융 서비스를 제공합니다.</p>
-                <!-- <a href="#" class="cta-button">서비스 보기</a> -->
-
-                <section class="search">
-                    <h3>검색</h3>
-                    <form action="search.php" method="get">
-                        <input type="text" name="query" placeholder="검색어를 입력하세요" required>
-                        <button type="submit">검색</button>
-                    </form>
-                </section>
-
-            </div>
-        </section>
-        <section class="features">
-            <ul id="n_bar">
-                <li class="dropdown">
-                    <a href="1"> 계좌</a>
-                </li>
-                <ul class="dropdown-menu">
-                    <li>계좌 생성</li>
-                    <li>계좌유형 조회</li>
-                    <li>잔액 조회</li>
-                </ul>
+        <div class="category">
+            <div class="category-header">대출</div>
+            <ul>
+                <li><a href="loans2.php">대출 신청</a></li>
+                <li><a href="loans3.php">대출 조회</a></li>
+                <li><a href="loans.php">대출 상품 조회</li>
             </ul>
-            <ul id="n_bar2">
-                <li class="dropdown2">
-                    <a href="2"> 이체조회</a>
-                </li>
-                <ul class="dropdown-menu2">
-                    <li>이체내역 조회</li>
-                    <li>이체 유형 조회</li>
-                    <li>거래 일자 조회</li>
-                </ul>
+        </div>
+        <div class="category">
+            <div class="category-header">계정</div>
+            <ul>
+                <li><a href="users.php">계좌 정보</a></li>
+                <li><a href="changePassword.php">비밀번호 변경</a></li>
             </ul>
-
-            <ul id="n_bar3">
-                <li class="dropdown3">
-                    <a href="3"> 대출</a>
-                </li>
-                <ul class="dropdown-menu3">
-                    <li>대출상품안내</li>
-                    <li>대출신청</li>
-                    <li>대출조회</li>
-                </ul>
-            </ul>
-        </section>
-        <aside>
-            <div class="list">
-                <h2>금융상품</h2>
-            </div>
-            <div class="list_menu">
-                <ul>
-                    <li>예적금</li>
-                    <li>대출</li>
-                    <li>외환</li>
-                    <li>카드</li>
-                    <li>인증센터</li>
-
-                </ul>
-            </div>
-        </aside>
-        <footer>
-            <div class="new">
-                <h4>새소식</h4>
-            </div>
-            <div class="new_list">
-                <ul>
-                    <li>보안관리 안내</li>
-                    <li>보안취약점 확인</li>
-                    <li>보안강화 프로그램 안내 </li>
-                </ul>
-            </div>
-        </footer>
-    </main>
+        </div>
+    </div>
 </body>
 
 </html>
