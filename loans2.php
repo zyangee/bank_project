@@ -5,8 +5,6 @@ include "dbconn.php";
 // 사용자 ID는 세션에서 가져온다고 가정합니다.
 // // 로그인 성공 후
 $user_num = $_SESSION['user_num']; // $user_num은 현재 로그인한 사용자의 ID
-
-
 $result = $conn->query("SELECT SUM(balance) AS total_assets FROM accounts WHERE user_num = '$user_num'");
 
 // fetch_assoc 대신 fetch(PDO::FETCH_ASSOC) 사용
@@ -94,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // 쿼리 실행 실패 시 오류 메시지 출력
         echo "<script>
             alert('대출 신청 중 오류가 발생했습니다: " . addslashes($e->getMessage()) . "');
-            window.location.href = 'loans1.php'; // 대출 조회 페이지로 이동
+            window.location.href = 'loans.php'; // 대출 조회 페이지로 이동
           </script>";
     }
 }

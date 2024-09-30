@@ -69,12 +69,12 @@ $conn = null; // 연결 종료
                 <?php if ($loans): ?>
                     <?php foreach ($loans as $loan): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($loan['loan_type']); ?></td>
+                            <td><?php echo htmlspecialchars($loan['type']); ?></td>
                             <td><?php echo number_format($loan['loan_amount']); ?>원</td>
                             <td><?php echo htmlspecialchars($loan['interest_rate']); ?>%</td>
                             <td><?php echo htmlspecialchars($loan['loan_start_date']); ?></td>
                             <td><?php echo htmlspecialchars($loan['loan_end_date']); ?></td>
-                            <td><?php echo htmlspecialchars($loan['loan_status']); ?></td>
+                            <td><?php echo htmlspecialchars($loan['status']); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

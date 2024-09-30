@@ -2,7 +2,7 @@
 session_start();
 include "dbconn.php";
 
-$user_num = $_GET['user_num'];
+$user_num = $_SESSION['user_num'];
 $plainPassword = ""; // 초기화
 
 // 사용자 정보를 가져오는 SQL 쿼리
