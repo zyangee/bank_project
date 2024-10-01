@@ -62,7 +62,7 @@ include "api/random_account.php";
 
                     <div id="authentication" style="display:none;"> <!--발급 버튼을 눌러야 보임-->
                         <div id="authentication-code"></div><!--인증번호 보이는 부분-->
-                        <button type="button" onclick="validAuthCode()">인증하기</button>
+                        <button class="input_button" type="button" onclick="validAuthCode()">인증하기</button>
                     </div>
                     <div id="auth-error"></div>
                 </div>
