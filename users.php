@@ -59,6 +59,56 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>계정 관리</title>
     <link rel="stylesheet" href="css/back.css">
+    <link rel="stylesheet" href="css/input.css">
+    <style>
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px 50px;
+            background-color: #f7f9fc;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .form_css {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form_css .info-table {
+            text-align: center;
+        }
+
+        .info-table,
+        .account_info {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            /* 중앙 정렬을 위해 margin 추가 */
+        }
+
+        .account_info th,
+        .account_info td {
+            border: 1px solid #cccccc;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .info-table th,
+        .info-table td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .account_info th {
+            background-color: #e7f0ff;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -81,62 +131,59 @@ try {
         </div>
     </header>
     <div class="container">
-        <div class="main">
-            <h1>계정 관리</h1>
-            <div class="account-info">
-                <h2>계정 정보</h2>
-                <table class="info-table">
+        <h2 class="h2_pageinfo">계좌 정보</h2>
+        <div class="form_css">
+            <table class="info-table">
+                <tr>
+                    <th>이름</th>
+                    <td><?php echo ($username); ?></td>
+                    <th>핸드폰 번호</th>
+                    <td><?php echo ($phone_number); ?></td>
+                </tr>
+                <tr>
+                    <th>사용자 ID</th>
+                    <td><?php echo ($user_num); ?></td>
+                    <th>비밀번호 변경</th>
+                    <td><a href="changePassword.php?user_num=<?php echo $user_num; ?>">비밀번호 변경</a></td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td><?php echo ($email); ?></td>
+                    <th>생년월일</th>
+                    <td><?php echo ($dob); ?></td>
+                </tr>
+                <tr>
+                    <th>회원가입일</th>
+                    <td><?php echo ($join_date); ?></td>
+                    <th>마지막 로그인</th>
+                    <td><?php echo ($last_login); ?></td>
+                </tr>
+            </table>
+        </div>
+        <div class="section2-info">
+            <table class="account_info">
+                <tr>
+                    <th>계좌번호</th>
+                    <th>잔액</th>
+                    <th>생성일</th>
+                </tr>
+                <?php if ($accounts): ?>
+                    <?php foreach ($accounts as $account): ?>
+                        <tr>
+                            <td><?php echo ($account['account_number']); ?></td>
+                            <td><?php echo ($account['balance']); ?> 원</td>
+                            <td><?php echo ($account['created_at']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
                     <tr>
-                        <th>이름</th>
-                        <td><?php echo ($username); ?></td>
-                        <th>핸드폰 번호</th>
-                        <td><?php echo ($phone_number); ?></td>
+                        <td colspan="3">계좌 정보가 없습니다.</td>
                     </tr>
-                    <tr>
-                        <th>사용자 ID</th>
-                        <td><?php echo ($user_num); ?></td>
-                        <th>비밀번호 변경</th>
-                        <td><a href="changePassword.php?user_num=<?php echo $user_num; ?>">비밀번호 변경</a></td>
-                    </tr>
-                    <tr>
-                        <th>이메일</th>
-                        <td><?php echo ($email); ?></td>
-                        <th>생년월일</th>
-                        <td><?php echo ($dob); ?></td>
-                    </tr>
-                    <tr>
-                        <th>회원가입일</th>
-                        <td><?php echo ($join_date); ?></td>
-                        <th>마지막 로그인</th>
-                        <td><?php echo ($last_login); ?></td>
-                    </tr>
-                </table>
-            </div>
+                <?php endif; ?>
+            </table>
         </div>
     </div>
-    <div class="account-info">
-        <h2>계좌 정보</h2>
-        <table class="info-table">
-            <tr>
-                <th>계좌번호</th>
-                <th>잔액</th>
-                <th>생성일</th>
-            </tr>
-            <?php if ($accounts): ?>
-                <?php foreach ($accounts as $account): ?>
-                    <tr>
-                        <td><?php echo ($account['account_number']); ?></td>
-                        <td><?php echo ($account['balance']); ?> 원</td>
-                        <td><?php echo ($account['created_at']); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="3">계좌 정보가 없습니다.</td>
-                </tr>
-            <?php endif; ?>
-        </table>
-    </div>
+
 
 </body>
 
