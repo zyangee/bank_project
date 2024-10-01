@@ -1,3 +1,7 @@
+<?php
+include "dbconn.php";
+?>
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -9,6 +13,15 @@
     <link rel="stylesheet" href="css/input.css">
     <link rel="stylesheet" href="css/input_account.css">
     <link rel="stylesheet" href="css/loan.css">
+    <style>
+        .h2_pageinfo {
+            margin-bottom: 30px;
+        }
+
+        .loan-product {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,8 +32,7 @@
                 <li><a href="main.php">홈</a></li>
                 <li>|</li>
                 <?php
-                include "dbconn.php";
-                if (isset($_SESSION['username'])): ?>
+                if (isset($_SESSION['user_num'])): ?>
                     <li><a href="#"><?php echo $_SESSION['username']; ?></a>님</li>
                     <li>|</li>
                     <li><a href="logout.php">로그아웃</a></li>

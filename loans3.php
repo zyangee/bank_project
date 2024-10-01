@@ -40,6 +40,8 @@ $conn = null; // 연결 종료
         <div class="navbar">
             <span>00은행</span>
             <ul>
+                <li><a href="main.php">홈</a></li>
+                <li>|</li>
                 <?php
                 include "dbconn.php";
                 if (isset($_SESSION['username'])): ?>

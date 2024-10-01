@@ -83,6 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="navbar">
         <span>00은행</span>
         <ul>
+            <li><a href="main.php">홈</a></li>
+            <li>|</li>
             <?php
             include "dbconn.php";
             if (isset($_SESSION['username'])): ?>

@@ -64,6 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['oldPassword'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호 변경</title>
+    <link rel="stylesheet" href="css/back.css">
+    <link rel="stylesheet" href="css/input.css">
+    <link rel="stylesheet" href="css/input_account.css">
     <script>
         window.onload = function () {
             <?php if (!empty($passwordChangeMessage)): ?>
@@ -74,16 +77,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['oldPassword'])) {
 </head>
 
 <body>
-    <h1>비밀번호 변경</h1>
-    <form method="POST" action="">
-        <label for="oldPassword">현재 비밀번호:</label><br>
-        <input type="password" id="oldPassword" name="oldPassword" required><br><br>
-        <label for="newPassword">새 비밀번호:</label><br>
-        <input type="password" id="newPassword" name="newPassword" required><br><br>
-        <label for="confirmPassword">새 비밀번호 확인:</label><br>
-        <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
-        <button type="submit">비밀번호 변경</button>
-    </form>
+    <div class="navbar">
+        <span>00은행</span>
+        <ul>
+            <li><a href="main.php">홈</a></li>
+            <li>|</li>
+            <?php
+            if (isset($_SESSION['user_num'])): ?>
+                <li><a href="#"><?php echo $_SESSION['username']; ?></a>님</li>
+                <li>|</li>
+                <li><a href="logout.php">로그아웃</a></li>
+            <?php else: ?>
+                <li><a href="login.php">로그인</a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+    <div class="container">
+        <h2 class="h2_pageinfo">비밀번호 변경</h2>
+        <form class="form_css" method="POST" action="">
+            <div>
+                <label class="input" for="oldPassword">현재 비밀번호:</label><br>
+                <input class="input_text" type="password" id="oldPassword" name="oldPassword" required>
+            </div>
+            <div>
+                <labe class="input" for="newPassword">새 비밀번호:</labe><br>
+                <input class="input_text" type="password" id="newPassword" name="newPassword" required>
+            </div>
+            <div>
+                <label class="input" for="confirmPassword">새 비밀번호 확인:</label><br>
+                <input class="input_text" type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <button class="submit_button" type="submit">비밀번호 변경</button>
+        </form>
+    </div>
 </body>
 
 </html>
