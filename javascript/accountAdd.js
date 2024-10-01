@@ -43,11 +43,18 @@ function validAuthCode() {
 
 //주민번호 뒷자리 7자리 숫자만
 function validResident() {
-  const resident_number2 = document.getElementById("resident-number2").value;
+  const resident_number2 = document.getElementById("resident-number2");
   const error = document.getElementById("resident-error");
+
+  //readonly 속성일 경우
+  if (resident_number2.hasAttribute("readonly")) {
+    error.textContent = "";
+    return true;
+  }
+  const resident_value = resident_number2.value;
   const resident = /^\d{7}$/;
 
-  if (!resident.test(resident_number2)) {
+  if (!resident.test(resident_value)) {
     error.textContent = "7자리 숫자로 입력해주세요.";
     return false;
   } else {

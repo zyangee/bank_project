@@ -34,9 +34,6 @@ include "api/random_account.php";
         <h2 class="h2_pageinfo">계좌 생성</h2>
         <form class="form_css" action="" onsubmit="submitForm(event)" method="POST">
             <div id="section">
-                <!-- <div>
-                    <input type="hidden" name="account_id" value="<?php echo $_SESSION['account_id']; ?>">
-                </div> -->
                 <div>
                     <label class="input">이름</label> <!--DB에 있는 이름 그대로 가져오기-->
                     <input class="input_text" type="text" id="username" name="username"
@@ -48,7 +45,8 @@ include "api/random_account.php";
                     <input type="text" id="resident-number1" name="resident-number1"
                         value="<?php echo ($resident_number1) ?>">
                     <span>-</span>
-                    <input type="text" id="resident-number2" name="resident-number2" maxlength="7" required>
+                    <input type="text" id="resident-number2" name="resident-number2" maxlength="7"
+                        value="<?php echo ($resident_number2); ?>" <?php echo !empty($resident_number2) ? 'readonly' : ''; ?> required>
                     <div id="resident-error" class="error"></div><!--주민번호 에러메시지-->
                 </div>
                 <div>

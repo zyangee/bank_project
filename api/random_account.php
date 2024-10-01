@@ -1,11 +1,6 @@
 <?php
 function randomAccountNumber($conn)
 {
-    // $sql_account = "SELECT COUNT(DISTINCT user_num) FROM accounts";
-    // $stmt_account = $conn->prepare($sql_account);
-    // $stmt_account->execute();
-    // $count_account = $stmt_account->fetchColumn(); //행의 개수 가져오기(user_num)
-
     $max = 1000;
     $tryagain = 0;
     do {
@@ -37,13 +32,19 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 $resident_num = $row['date_of_birth'];
 
-//주민번호가 6자리 일 때와 아닐 때의 if-else문
-if (strpos($resident_num, '-') !== false) {
+//주민번호가 14자리인 경우
+if (strlen($resident_num) == 14 && strpos($resident_num, '-') !== false) {
     $resident_number1 = substr($resident_num, 0, 6);
-} else {
-    $resident_number1 = $resident_num;
+    $resident_number2 = substr($resident_num, 7);
 }
-
+//주민번호가 6자리인 경우
+elseif (strlen($resident_num) == 6) {
+    $resident_number1 = $resident_num;
+    $resident_number2 = '';
+} else {
+    echo "<script>console.log('주민번호 형식이 올바르지 않습니다.');</script>";
+    exit;
+}
 if ($row > 0) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $resident_num) {
         //post요청 들어오는 값 저장
