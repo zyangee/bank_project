@@ -75,8 +75,7 @@ if ($row > 0) {
             $stmt_update->bindParam(':resident_number', $full_resident_number);
             $stmt_update->bindParam(':user_num', $user_num);
             if ($stmt_update->execute() === TRUE) {
-                echo "<script>alert('계좌가 생성되었습니다.');</script>";
-                echo "<script>location.href = '../main.php';</script>";
+                echo "<script>location.href = '../users.php';</script>";
                 exit;
             } else {
                 echo "주민번호 업데이트 실패: " . implode(", ", $stmt_update->errorInfo()) . "";

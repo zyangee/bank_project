@@ -77,14 +77,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>거래내역 조회</title>
     <link rel="stylesheet" href="css/back.css">
+    <link rel="stylesheet" href="css/input.css">
+    <link rel="stylesheet" href="css/transactions.css">
+    <style>
+        h2 {
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="navbar">
         <span>00은행</span>
         <ul>
-            <li><a href="main.php">홈</a></li>
-            <li>|</li>
             <?php
             include "dbconn.php";
             if (isset($_SESSION['username'])): ?>
@@ -97,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </ul>
     </div>
     <div class="container">
-        <h1>거래내역 조회</h1>
+        <h2 class="h2_pageinfo">거래내역 조회</h2>
         <div class="search-box">
             <form method="post" action="transactions.php">
 
@@ -145,23 +150,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <div class="options">
-                    <div class="radio-group">
+                    <div class="search-group">
                         <label>조회내용 :</label>
                         <input type="radio" id="all" name="view-option" value="all" checked>
-                        <label for="all">전체(입금+출금)</label>
+                        <span for="all">전체(입금+출금)</span>
                         <input type="radio" id="deposit" name="view-option" value="deposit">
-                        <label for="deposit">입금내역</label>
+                        <span for="deposit">입금내역</span>
                         <input type="radio" id="interest" name="view-option" value="interest">
-                        <label for="interest">출금내역</label>
+                        <span for="interest">출금내역</span>
                     </div>
 
                     <!-- 조회결과 정렬 -->
                     <div class="search-group">
                         <label>조회결과 순서:</label>
                         <input type="radio" name="order" id="recent" value="recent" checked>
-                        <label for="recent">최근거래순</label>
+                        <span for="recent">최근거래순</span>
                         <input type="radio" name="order" id="past" value="past">
-                        <label for="past">과거거래순</label>
+                        <span for="past">과거거래순</span>
                     </div>
 
                     <!-- 조회 버튼 -->
